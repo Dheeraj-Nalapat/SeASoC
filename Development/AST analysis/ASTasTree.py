@@ -1,4 +1,5 @@
 import ast
+import astor
 
 class MyVisitor(ast.NodeVisitor):
     def visit_FunctionDef(self, node):
@@ -20,23 +21,18 @@ class MyVisitor(ast.NodeVisitor):
                 print(f"Method Call: {'.'.join(reversed(attr_chain))}")
         self.generic_visit(node)
 
-
     def visit_Name(self, node):
         print(f"Variable or Function Name: {node.id}")
-
         self.generic_visit(node)
 
-# Example code
 file_path = r'D:\User\Documents\codes\SeASoC\Development\Testing Code\event_planer.py'
 # Example code
 with open(file_path, 'r') as file:
     source_code = file.read()
+# (Your sample_code remains the same)
 
 # Generate AST for the example code
 ast_tree = ast.parse(source_code)
 
-# Create an instance of the custom visitor
-visitor = MyVisitor()
-
-# Traverse the AST with the visitor
-visitor.visit(ast_tree)
+# Print the AST in tree format using astor
+print(astor.dump_tree(ast_tree))
